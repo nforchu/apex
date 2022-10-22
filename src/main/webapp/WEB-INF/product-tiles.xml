@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+
+    <definition name="product-list" extends="standard.index">
+        <put-attribute name="body" value="/WEB-INF/pages/product/product-list.jsp" />
+    </definition>
+
+    <definition name="product" extends="standard.index">
+        <put-attribute name="body" value="/WEB-INF/pages/product/product.jsp" />
+    </definition>
+
+    <definition name="product-form" extends="standard.index">
+        <put-attribute name="body" value="/WEB-INF/pages/product/product-form.jsp" />
+    </definition>
+
+</tiles-definitions>
