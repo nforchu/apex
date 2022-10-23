@@ -5,9 +5,10 @@ import java.util.Map;
 
 public class MenuMap {
 
+	private String title;
     private Map<String, String> menu = new HashMap<> ();
 
-    public Map<String, String> get() {
+    public Map<String, String> getMap() {
         return menu;
     }
 
@@ -15,4 +16,15 @@ public class MenuMap {
         this.menu.put(key, value);
         return this;
     }
+
+	public String getTitle() {
+		return title;
+	}
+
+	public MenuMap setTitle(String title) {
+		this.title = title;
+		return this;
+	}
+    
+    
 }

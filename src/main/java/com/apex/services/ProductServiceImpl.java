@@ -14,7 +14,25 @@ public class ProductServiceImpl implements ProductService {
         List<Product> products = new ArrayList<>();
         products.add(new Product()
                         .setId(1L)
+                        .setDescription("Sample product description")
+                        .setPrice(120.56F)
+                        .setStockQuantity(50)
+                        .setDiscountPercent(0)
                         .setTitle("Sneakers A"));
+        products.add(new Product()
+                .setId(1L)
+                .setDescription("Sample product description")
+                .setPrice(12.99F)
+                .setStockQuantity(30)
+                .setDiscountPercent(15)
+                .setTitle("Hats A"));
+        products.add(new Product()
+                .setId(1L)
+                .setDescription("Sample product description")
+                .setPrice(99.89F)
+                .setStockQuantity(30)
+                .setDiscountPercent(10)
+                .setTitle("Skirts "));
         return products;
     }
 
@@ -22,4 +40,15 @@ public class ProductServiceImpl implements ProductService {
     public Product addProduct(Product product) {
         return null;
     }
+
+	@Override
+	public Product get(long id) {		
+		return new Product()
+                .setId(1L)
+                .setDescription("Sample product description")
+                .setPrice(120.56F)
+                .setStockQuantity(30)
+                .setDiscountPercent(0)
+                .setTitle("Sneakers A");
+	}
 }

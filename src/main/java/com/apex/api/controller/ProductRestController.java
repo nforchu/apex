@@ -7,11 +7,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("products")
+@RequestMapping(value = "products")
 public class ProductRestController {
 
     @GetMapping
     public ResponseEntity<?> all() {
+        return ResponseEntity.status(HttpStatus.OK).body("all good product list");
+    }
+    
+    @GetMapping(value = "{id}")
+    public ResponseEntity<?> get() {
         return ResponseEntity.status(HttpStatus.OK).body("all good product list");
     }
 }

@@ -4,19 +4,35 @@
 
 
 
-<div class="row">
-    <div>
-      notes
-    <div>
-
-
-    <form action = "/products/form" method = "POST">
-         <h3>Add category</h3>
-         Email: <input type = "email" name = "email" size="70">
-         <br />
-         Description: <textarea rows="5" cols="70" name = "description"> </textarea>
-         <input type = "submit" value = "Submit" />
-
-         <div>Forgot password</div>
-    </form>
+<div class="container">
+    <h3>${title}</h3>    
+    <form action = "/category" method = "POST">
+      <input type="hidden" 
+      	name="id"
+      	required
+      	class="form-control" 
+      	value="${category.getId()}" 
+      	id="categoryId">
+      	
+	  <div class="mb-3">
+	    <label for="categoryTitle" class="form-label">Category Title</label>
+	    <input type="text" 
+	    	name="title"
+	    	required
+	    	class="form-control" 
+	    	id="categoryTitle"
+	    	value="${category.getTitle()}">	   
+	  </div>
+	  
+	  <div class="mb-3">
+	    <label for="categoryDescription" class="form-label">Description</label>
+	    <textarea 
+	    	name="description"
+	    	class="form-control" 
+    		id="categoryDescription">${category.getDescription()}</textarea>
+	  </div>	  
+	  <input type="submit" value="Save" class="btn btn-secondary"/>
+	  <input type="submit" value="Save and add another" class="btn btn-secondary"/>
+	  <a class="btn btn-warning" href="/category/list">Cancel</a>
+	</form>
 </div>
