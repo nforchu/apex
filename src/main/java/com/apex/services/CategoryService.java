@@ -9,5 +9,6 @@ public interface CategoryService {
 	Collection<Category> getCategories();
 	Category get(long id);
 	Category add(Category category);
+	Category update(Category category);
 
 }

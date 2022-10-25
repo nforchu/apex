@@ -5,7 +5,7 @@
 <div class="container">
 	<div class="mb-4">	
 		<a class="btn btn-sm btn-warning" href="<c:out value="/category/form/${category.id}"/>">Edit</a>
-       	<a class="btn btn-sm btn-dark" href="<c:out value="/category/${category.id}"/>">View products</a>	 
+       	<a class="btn btn-sm btn-dark" href="<c:out value="/category/${category.id}/products"/>">View products</a>	 
 		<a class="btn btn-sm btn-secondary" href="/category/form">Deactivate</a>  
 		<a class="btn btn-sm btn-secondary disabled" href="/category/form">Activate</a> 
 		<a class="btn btn-sm btn-secondary" href="/category/form">Delete</a>

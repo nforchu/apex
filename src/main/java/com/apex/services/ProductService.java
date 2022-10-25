@@ -8,6 +8,7 @@ public interface ProductService {
 
     Collection<Product> getProducts();
     Product get(long id);
-    Product addProduct(Product product);
+    Product add(Product product, long[] categoryIds);
+    Product update(Product product, long[] categoryIds);
     
 }

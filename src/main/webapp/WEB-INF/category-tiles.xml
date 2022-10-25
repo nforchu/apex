@@ -16,5 +16,9 @@
     <definition name="category-list" extends="standard.index">
         <put-attribute name="body" value="/WEB-INF/pages/category/category-list.jsp" />
     </definition>
+    
+    <definition name="category-products" extends="standard.index">
+        <put-attribute name="body" value="/WEB-INF/pages/category/category-products.jsp" />
+    </definition>
 
 </tiles-definitions>

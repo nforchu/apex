@@ -32,6 +32,16 @@ public class CategoryController {
         return "category";
     }
     
+    @RequestMapping(value = "{id}/products", method = RequestMethod.GET)
+    public String getProducts(Model model, @PathVariable long id) {
+    	Category category = categoryService.get(id);
+        model.addAttribute("title" , String.format("%s : Products",category.getTitle()));
+        model.addAttribute("category", category);
+        System.out.println(category.getProducts().size());
+        model.addAttribute("menu", buildMenu());
+        return "category-products";
+    }
+    
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public String list(Model model) {
         model.addAttribute("menu", buildMenu());
@@ -76,7 +86,7 @@ public class CategoryController {
     }
     
     private Category update(Category category) {
-    	return null;
+    	return categoryService.update(category);
     }
 
     private MenuMap buildMenu(){

@@ -1,25 +1,25 @@
 package com.apex.jpa;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.JoinColumn;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "categories")
+@SequenceGenerator(name = "categories_sequence")
 public class Category {
 	
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "categories_sequence" )
 	@Column(name = "id")
 	private long id;
 	
@@ -32,14 +32,8 @@ public class Category {
 	@Column(name = "status")
 	private String status;
 	
-	@ManyToMany(cascade = {
-		    CascadeType.PERSIST,
-		    CascadeType.MERGE
-		})
-		@JoinTable(name = "category_products",
-		    joinColumns = @JoinColumn(name = "category_id"),
-		    inverseJoinColumns = @JoinColumn(name = "product_id")
-		)
+	
+	@ManyToMany(mappedBy = "categories")
 	private Set<Product> products = new HashSet<>();
 		
 	public long getId() {
@@ -77,5 +71,29 @@ public class Category {
 		this.status = status;
 		return this;
 	}
-	
+
+	public Set<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(Set<Product> products) {
+		this.products = products;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Category other = (Category) obj;
+		return id == other.id;
+	}
 }

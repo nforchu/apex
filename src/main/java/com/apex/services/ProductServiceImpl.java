@@ -1,6 +1,10 @@
 package com.apex.services;
 
+import com.apex.jpa.Category;
 import com.apex.jpa.Product;
+import com.apex.repository.CategoryRepository;
+import com.apex.repository.ProductRepository;
+
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -9,7 +13,19 @@ import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService {
-    @Override
+	
+	private ProductRepository productRepo;
+	private CategoryRepository categoryRepo;
+			
+    
+
+	public ProductServiceImpl(ProductRepository productRepo, CategoryRepository categoryRepo) {
+		super();
+		this.productRepo = productRepo;
+		this.categoryRepo = categoryRepo;
+	}
+
+	@Override
     public Collection<Product> getProducts() {
         List<Product> products = new ArrayList<>();
         products.add(new Product()
@@ -36,11 +52,6 @@ public class ProductServiceImpl implements ProductService {
         return products;
     }
 
-    @Override
-    public Product addProduct(Product product) {
-        return null;
-    }
-
 	@Override
 	public Product get(long id) {		
 		return new Product()
@@ -50,5 +61,18 @@ public class ProductServiceImpl implements ProductService {
                 .setStockQuantity(30)
                 .setDiscountPercent(0)
                 .setTitle("Sneakers A");
+	}
+
+	@Override
+	public Product add(Product product, long[] categoryIds) {
+		for(long id: categoryIds) {
+			product.addCategory(categoryRepo.findById(id).get());
+		}
+		return productRepo.save(product);
+	}
+
+	@Override
+	public Product update(Product product, long[] categoryIds) {
+		return null;
 	}
 }
