@@ -62,6 +62,8 @@ public class ProductController {
         model.addAttribute("title" , String.format("Edit product: %s", product.getTitle()))
         	 .addAttribute("product", product)
         	 .addAttribute("menu", buildMenu());
+        
+        model.addAttribute("categories", categoryService.getCategories());
         return "product-form";
     }
 
@@ -77,10 +79,8 @@ public class ProductController {
     			.setStockQuantity(data.getStockQuantity())
     			.setDiscountPercent(data.getDiscountPercent());
     	product = data.getId() > 0 ? update(product, data.getCategories()) : add(product, data.getCategories());
-    	
-    	//model.addAttribute("product", product)
-        //	 .addAttribute("menu", buildMenu());
-        return "product";
+   
+    	return String.format("redirect:/product/%s", product.getId());
     }
     
     private Product add(Product product, long[] categoryIds) {

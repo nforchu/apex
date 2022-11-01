@@ -43,7 +43,14 @@ public class CategoryServiceImpl implements CategoryService {
 		Optional<Category> optional = categoryRepo.findById(category.getId());
 		if(optional.isEmpty()) {
 			throw new RuntimeException("NOT FOUND");
-		}		
-		return categoryRepo.save(category);
+		}	
+		Category cat = optional.get().setTitle(category.getTitle())
+									 .setDescription(category.getDescription());
+		return categoryRepo.save(cat);
+	}
+
+	@Override
+	public void delete(long id) {
+		categoryRepo.deleteById(id);		
 	}
 }

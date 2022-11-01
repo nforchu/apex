@@ -21,4 +21,7 @@
         <put-attribute name="body" value="/WEB-INF/pages/category/category-products.jsp" />
     </definition>
 
+	<definition name="category-delete" extends="standard.index">
+        <put-attribute name="body" value="/WEB-INF/pages/category/category-delete.jsp" />
+    </definition>
 </tiles-definitions>

@@ -6,6 +6,7 @@ import com.apex.util.MenuMap;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -78,8 +79,24 @@ public class CategoryController {
     	
         model.addAttribute("menu", buildMenu());
         model.addAttribute("category", category);
-        return "category"; 
+        return String.format("redirect:/category/%s", category.getId());
     }
+    
+    @RequestMapping(value = "{id}/delete",  method = RequestMethod.GET)
+    public String confirmDelete(Model model, @PathVariable long id) {
+    	Category category = categoryService.get(id);
+        model.addAttribute("title" , String.format("Delete category %s", category.getTitle()));
+        model.addAttribute("category", category);
+        model.addAttribute("menu", buildMenu());
+        return "category-delete";
+    }
+    
+    @RequestMapping(value = "{id}/delete",  method = RequestMethod.POST)
+    public String delete(Model model , @PathVariable long id) {
+    	categoryService.delete(id);
+    	return "redirect:/category/list";
+    }
+    
     
     private Category add(Category category) {
     	return categoryService.add(category);

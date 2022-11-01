@@ -1,5 +1,6 @@
 package com.apex.jpa;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -16,12 +17,19 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name = "products")
 @SequenceGenerator(name = "products_sequence")
+@SQLDelete(sql = "UPDATE products SET deleted = true WHERE id=?")
+@Where(clause = "deleted=false")
 public class Product {
 
 	@Id
@@ -43,9 +51,19 @@ public class Product {
 	@Column(name = "price")
     private double price;
 	
+	@Column(name = "created")
+	private Date created;
+	
+	@Column(name = "updated")
+	private Date updated;
+	
+	@Column(name = "deleted")
+	private boolean deleted = Boolean.FALSE;
+	
 	@ManyToMany(cascade = {
 		    CascadeType.PERSIST,
-		    CascadeType.MERGE
+		    CascadeType.MERGE,
+		    CascadeType.REFRESH
 		})
 		@JoinTable(name = "product_categories",
 		    joinColumns = @JoinColumn(name = "product_id"),
@@ -127,9 +145,33 @@ public class Product {
     }
  
     public void removeCategory(Category category) {
-        categories.remove(category);
+    	categories.remove(category);
         category.getProducts().remove(this);
+        
     }
+    
+    
+
+	public Date getCreated() {
+		return created;
+	}
+
+
+	public Date getUpdated() {
+		return updated;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public List<OrderItem> getOrderItems() {
+		return orderItems;
+	}
+
+	public void setOrderItems(List<OrderItem> orderItems) {
+		this.orderItems = orderItems;
+	}
 
 	@Override
 	public int hashCode() {
@@ -147,4 +189,14 @@ public class Product {
 		Product other = (Product) obj;
 		return id == other.id;
 	}    
+	
+	@PrePersist
+	public void prePersist() {
+		this.created = new Date(System.currentTimeMillis());
+	}
+	
+	@PreUpdate
+	public void postUpdate() {
+		this.updated = new Date(System.currentTimeMillis());
+	}
 }

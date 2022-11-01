@@ -1,5 +1,6 @@
 package com.apex.jpa;
 
+import java.sql.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -10,12 +11,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.PostUpdate;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "categories")
 @SequenceGenerator(name = "categories_sequence")
+@SQLDelete(sql = "UPDATE categories SET deleted = true WHERE id=?")
+@Where(clause = "deleted=false")
 public class Category {
 	
 	@Id
@@ -32,8 +43,18 @@ public class Category {
 	@Column(name = "status")
 	private String status;
 	
+	@Column(name = "created")
+	private Date created;
+	
+	@Column(name = "updated")
+	private Date updated;
+	
+	@Column(name = "deleted")
+	private boolean deleted = Boolean.FALSE;
+	
 	
 	@ManyToMany(mappedBy = "categories")
+	@JsonIgnore
 	private Set<Product> products = new HashSet<>();
 		
 	public long getId() {
@@ -79,6 +100,18 @@ public class Category {
 	public void setProducts(Set<Product> products) {
 		this.products = products;
 	}
+	
+	public Date getCreated() {
+		return created;
+	}
+
+	public Date getUpdated() {
+		return updated;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
 
 	@Override
 	public int hashCode() {
@@ -96,4 +129,14 @@ public class Category {
 		Category other = (Category) obj;
 		return id == other.id;
 	}
+	
+	@PrePersist
+	public void prePersist() {
+		this.created = new Date(System.currentTimeMillis());
+	}
+	
+	@PreUpdate
+	public void postUpdate() {
+		this.updated = new Date(System.currentTimeMillis());
+	}	
 }

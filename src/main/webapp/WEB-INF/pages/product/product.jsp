@@ -30,6 +30,16 @@
     	<div class="col-sm-9">${product.getStockQuantity()}</div>
     </div>
     
+     <div class="row pb-4">
+    	<div class="col-sm-3"><span class="fw-bold">Categories</span></div>    	
+    	<div class="col-sm-9">    		
+    		<c:forEach items="${product.getCategories()}" var="category">
+            	<span class="badge text-bg-info">${category.getTitle()}</span>
+        	</c:forEach>
+    	</div>
+    </div>
+
+    
     <div class="row pb-4">
     	<div class="col-sm-3"><span class="fw-bold">Description</span></div>    	
     	<div class="col-sm-9">${product.getDescription()}</div>

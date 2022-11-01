@@ -84,3 +84,60 @@ body {
 .list-group-item a:hover{
 	font-weight: bold;
 }
+
+#imgInp {
+	  font-family: calibri;
+	  width: 350px;
+	  padding: 60px;
+	  -webkit-border-radius: 5px;
+	  -moz-border-radius: 5px;
+	  border: 1px dashed #BBB;
+	  text-align: center;
+	  background-color: #DDD;
+	  cursor: pointer;
+}
+
+
+#drop-container {
+  position: relative;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px dashed #555;
+  color: #444;
+  cursor: pointer;
+  transition: background .2s ease-in-out, border .2s ease-in-out;
+  background: #eee;
+  border-color: #111;
+}
+
+.drop-container:hover {
+  background: #eee;
+  border-color: #111;
+}
+
+.drop-container:hover .drop-title {
+  color: #222;
+}
+
+.drop-title {
+  color: #444;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  transition: color .2s ease-in-out;
+}
+
+#imgInp {
+	z-index: -100;
+}
+
+
+#preview-box {
+	display: none;
+}

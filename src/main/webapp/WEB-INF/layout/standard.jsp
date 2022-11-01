@@ -7,6 +7,8 @@
     <link href="<c:url value="/css/styles.css" />" rel="stylesheet"></link>	
     
     <title>${title}</title>
+    
+    
   </head>
   
   <body>
@@ -27,7 +29,12 @@
 			
 	</div>
 	
+	<div><p>Sample</p><button>Click</button></div>
+	
 	<script src="/webjars/bootstrap/5.2.2/js/bootstrap.min.js"></script>
 	<script src="/webjars/jquery/3.6.1/jquery.min.js"></script>	
+	<script>
+		
+	</script>
   </body>
 </html>
