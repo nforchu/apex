@@ -7,20 +7,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -34,10 +21,15 @@ public class Product {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "products_sequence")
+	@Column(name = "product_id")
     private long id;
 	
-	@Column(name = "title")
+	@Column(name = "title", nullable = false)
     private String title;
+
+	@Column(name = "status", nullable = false)
+	@Enumerated(EnumType.STRING)
+	private ActiveOrInactive status;
 	
 	@Column(name = "description")
     private String description;
@@ -48,10 +40,10 @@ public class Product {
 	@Column(name = "discount")
     private int discountPercent;
 	
-	@Column(name = "price")
+	@Column(name = "price", nullable = true)
     private double price;
 	
-	@Column(name = "created")
+	@Column(name = "created", nullable = false)
 	private Date created;
 	
 	@Column(name = "updated")
@@ -71,8 +63,7 @@ public class Product {
 		)
 	private Set<Category> categories = new HashSet<>();
 	
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "product_id")
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<OrderItem> orderItems = new ArrayList<>();
 
     public long getId() {
@@ -147,8 +138,17 @@ public class Product {
     public void removeCategory(Category category) {
     	categories.remove(category);
         category.getProducts().remove(this);
-        
-    }
+	}
+
+	public void addOrderItem(OrderItem orderItem) {
+		orderItems.add(orderItem);
+		orderItem.setProduct(this);
+	}
+
+	public void removeOrderItem(OrderItem orderItem) {
+		orderItems.remove(orderItem);
+		orderItem.setProduct(null);
+	}
     
     
 
@@ -163,6 +163,26 @@ public class Product {
 
 	public boolean isDeleted() {
 		return deleted;
+	}
+
+	public ActiveOrInactive getStatus() {
+		return status;
+	}
+
+	public void setStatus(ActiveOrInactive status) {
+		this.status = status;
+	}
+
+	public void setCreated(Date created) {
+		this.created = created;
+	}
+
+	public void setUpdated(Date updated) {
+		this.updated = updated;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 
 	public List<OrderItem> getOrderItems() {
@@ -199,4 +219,6 @@ public class Product {
 	public void postUpdate() {
 		this.updated = new Date(System.currentTimeMillis());
 	}
+
+
 }

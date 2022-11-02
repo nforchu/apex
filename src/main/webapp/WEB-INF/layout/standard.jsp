@@ -20,6 +20,7 @@
 		    <a href="/welcome">Home</a>		    
 		    <a href="/category/list">Categories</a>
 		    <a href="/product/list">Products</a>
+		    <a href="/order/list">Orders</a>
 		</div>
 		
 		<div class="row pt-2">

@@ -33,7 +33,6 @@ public class ProductController {
     	Product product = productService.get(id);
         model.addAttribute("title" , product.getTitle());
         model.addAttribute("product", product);
-        System.out.println(product.getCategories().size());
         model.addAttribute("menu", buildMenu());
         return "product";
     }
@@ -79,7 +78,6 @@ public class ProductController {
     			.setStockQuantity(data.getStockQuantity())
     			.setDiscountPercent(data.getDiscountPercent());
     	product = data.getId() > 0 ? update(product, data.getCategories()) : add(product, data.getCategories());
-   
     	return String.format("redirect:/product/%s", product.getId());
     }
     

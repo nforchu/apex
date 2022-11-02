@@ -31,7 +31,7 @@ public class Category {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "categories_sequence" )
-	@Column(name = "id")
+	@Column(name = "category_id")
 	private long id;
 	
 	@Column(name="title")

@@ -1,21 +1,16 @@
 package com.apex.services;
 
+import com.apex.jpa.ActiveOrInactive;
 import com.apex.jpa.Category;
 import com.apex.jpa.Product;
 import com.apex.repository.CategoryRepository;
 import com.apex.repository.ProductRepository;
-
 import org.springframework.stereotype.Service;
 
-import java.lang.StackWalker.Option;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -47,6 +42,7 @@ public class ProductServiceImpl implements ProductService {
 		for(long id: categoryIds) {
 			product.addCategory(categoryRepo.findById(id).get());
 		}
+		product.setStatus(ActiveOrInactive.ACTIVE);
 		return productRepo.save(product);
 	}
 
