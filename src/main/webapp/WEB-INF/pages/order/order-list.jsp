@@ -2,10 +2,8 @@
 	pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<div>
-	<h3>
-		<span>Orders</span>  
-	</h3>                   
+<div class="mb-4">
+	<span class="fs-2 fw-bold text-secondary">${title}</span>                    
 </div>  
 <table class="table table-striped">
     <thead>

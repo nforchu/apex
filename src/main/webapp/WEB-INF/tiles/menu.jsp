@@ -2,13 +2,14 @@
 	pageEncoding="ISO-8859-1"%>
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<div>
-	<h5>${menu.getTitle()}</h5>
+<div class="m-4">
+	<span class="fs-2 fw-bold text-secondary">${menu.getTitle()}</span>
+	
+	<ul class="list-group ">
+	    <c:forEach var="entry" items="${menu.getMap()}">
+	        <li class="list-group-item fs-6 fw-bold">
+	            <a class="text-secondary" href="<c:out value="${entry.value}"/>"><c:out value="${entry.key}"/></a>
+	        </li>
+	    </c:forEach>
+	</ul>
 </div>
-<ul class="list-group">
-    <c:forEach var="entry" items="${menu.getMap()}">
-        <li class="list-group-item">
-            <a href="<c:out value="${entry.value}"/>"><c:out value="${entry.key}"/></a>
-        </li>
-    </c:forEach>
-</ul>

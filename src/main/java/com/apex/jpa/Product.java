@@ -15,7 +15,7 @@ import org.hibernate.annotations.Where;
 @Entity
 @Table(name = "products")
 @SequenceGenerator(name = "products_sequence")
-@SQLDelete(sql = "UPDATE products SET deleted = true WHERE id=?")
+@SQLDelete(sql = "UPDATE products SET deleted = true WHERE product_id=?")
 @Where(clause = "deleted=false")
 public class Product {
 

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+
+    <definition name="user-list" extends="standard.index">
+        <put-attribute name="body" value="/WEB-INF/pages/user/user-list.jsp" />
+    </definition>
+
+	<definition name="user" extends="standard.index">
+        <put-attribute name="body" value="/WEB-INF/pages/user/user.jsp" />
+    </definition>
+    
+    <definition name="user-form" extends="standard.index">
+        <put-attribute name="body" value="/WEB-INF/pages/user/user-form.jsp" />
+    </definition>
+    
+    <definition name="user-delete" extends="standard.index">
+        <put-attribute name="body" value="/WEB-INF/pages/user/user-delete.jsp" />
+    </definition>
+    
+</tiles-definitions>

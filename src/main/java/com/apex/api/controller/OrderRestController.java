@@ -1,5 +1,7 @@
 package com.apex.api.controller;
 
+import java.text.ParseException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -39,25 +41,40 @@ public class OrderRestController {
 	}
 	
 	@PutMapping("{id}/add-item")
-	public ResponseEntity<?> addItem(@PathVariable(name = "id") long orderId, @RequestBody CartItem item){
+	public ResponseEntity<?> addItem(
+				@PathVariable(name = "id") long orderId, 
+				@RequestBody CartItem item) throws ParseException{
 		Order order = orderService.addItem(orderId, item);
 		return ResponseEntity.status(HttpStatus.OK).body(order);
 	}
 	
 	@PutMapping("{id}/remove-item/{itemId}")
 	public ResponseEntity<?> removeItem(@PathVariable long id, @PathVariable long itemId){
-		return ResponseEntity.status(HttpStatus.OK).body(orderService.removeItem(id, itemId));
+		return ResponseEntity
+				.status(HttpStatus.OK)
+				.body(orderService.removeItem(id, itemId));
 	}
 	
 	
 	@DeleteMapping("{id}/delete-item/{itemId}")
 	public ResponseEntity<?> deleteItem(@PathVariable long id, @PathVariable long itemId){
-		return ResponseEntity.status(HttpStatus.OK).body(orderService.deleteItem(id, itemId));
+		return ResponseEntity
+				.status(HttpStatus.OK)
+				.body(orderService.deleteItem(id, itemId));
 	}
 	
 	@PutMapping("{id}/checkout")
 	public ResponseEntity<?> checkout(@PathVariable long id){
-		return ResponseEntity.status(HttpStatus.OK).body(orderService.confirmCheckout(id));
+		return ResponseEntity
+				.status(HttpStatus.OK)
+				.body(orderService.confirmCheckout(id));
+	}
+	
+	@PutMapping("{id}/cancel")
+	public ResponseEntity<?> cancel(@PathVariable long id){
+		return ResponseEntity
+				.status(HttpStatus.OK)
+				.body(orderService.process(id, Order.OrderStatus.CANCELED.name()));
 	}
 	
 }

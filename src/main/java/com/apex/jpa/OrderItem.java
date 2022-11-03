@@ -12,7 +12,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "order_items")
 @SequenceGenerator(name = "order_items_sequence")
-@SQLDelete(sql = "UPDATE order_items SET deleted = true WHERE id=?")
+@SQLDelete(sql = "UPDATE order_items SET deleted = true WHERE order_item_id=?")
 @Where(clause = "deleted=false")
 public class OrderItem {
 	@Id

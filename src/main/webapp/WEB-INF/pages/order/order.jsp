@@ -2,6 +2,18 @@
 	pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<div class="row mb-4">
+	<div class="col-12">
+		<c:if test = "${order.getStatus().name() == 'CONFIRMED'}">
+			<a class="btn btn-sm btn-dark" href="<c:out value="/order/${order.id}/process?status=PROCESSING"/>">Process order</a>
+		</c:if>
+		
+		<c:if test = "${order.getStatus().name() == 'PROCESSING'}">
+			<a class="btn btn-sm btn-dark" href="<c:out value="/order/${order.id}/process?status=DELIVERED"/>">Close</a>
+		</c:if>
+	</div>
+
+</div>
 
 <div class="row pb-4">
    	<div class="col-3"><span class="fw-bold">Product title</span></div>    	

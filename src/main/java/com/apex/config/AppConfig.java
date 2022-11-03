@@ -26,6 +26,7 @@ public class AppConfig {
                 "/WEB-INF/titles.xml",
                 "/WEB-INF/category-tiles.xml",
                 "/WEB-INF/product-tiles.xml",
+                "/WEB-INF/user-tiles.xml",
                 "/WEB-INF/order-tiles.xml"};
         tilesConfigurer.setDefinitions(definitions);
         return tilesConfigurer;

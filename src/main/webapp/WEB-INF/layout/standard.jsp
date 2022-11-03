@@ -18,24 +18,20 @@
 	<div class="container-fluid">	
 		<div class="navigation text-end">
 		    <a href="/welcome">Home</a>		    
-		    <a href="/category/list">Categories</a>
-		    <a href="/product/list">Products</a>
+		    <a href="/category/list">Categories</a>		   
 		    <a href="/order/list">Orders</a>
+		     <a href="/product/list">Products</a>
+		    <a href="/user/list">Users</a>
 		</div>
 		
 		<div class="row pt-2">
-		    <div class="column side"><tiles:insertAttribute name="menu" /></div>
+		    <div class="column side vh-100"><tiles:insertAttribute name="menu" /></div>
 		 	<div class="column middle"><tiles:insertAttribute name="body" /></div>
 		</div>		
 			
 	</div>
 	
-	<div><p>Sample</p><button>Click</button></div>
-	
 	<script src="/webjars/bootstrap/5.2.2/js/bootstrap.min.js"></script>
 	<script src="/webjars/jquery/3.6.1/jquery.min.js"></script>	
-	<script>
-		
-	</script>
   </body>
 </html>

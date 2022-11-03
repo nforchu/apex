@@ -1,5 +1,10 @@
 package com.apex.services;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -53,15 +58,18 @@ public class OrderServiceImpl implements OrderService{
 	
 
 	@Override
-	public Order addItem(long orderId, CartItem cartItem) {
+	public Order addItem(long orderId, CartItem cartItem) throws ParseException {
 		Order order;
 		if (orderId > 0) {
 			order = orderRepo.findById(orderId).orElseThrow();
+			if (!Order.OrderStatus.OPEN.equals(order.getStatus())) {
+				throw new IllegalStateException("You can only cancle open orders");
+			}
 		} else {
 			order = new Order().setStatus(Order.OrderStatus.OPEN);
 			Customer customer = customerRepo.findById(cartItem.getCustomerId()).orElseThrow();
 			order.setCustomer(customer)
-				 .setOrderNumber(String.format("APX-%s", Math.random()));
+				 .setOrderNumber(generateOrderNumber());				 
 			customer.addOrder(order);
 		}		
 		Product product = productRepo.findById(cartItem.getProductId()).orElseThrow();			
@@ -85,15 +93,15 @@ public class OrderServiceImpl implements OrderService{
 		
 		product.addOrderItem(orderItem);
 		orderItem.setProduct(product);
-		if(!order.getStatus().equals(Order.OrderStatus.OPEN)) {
-			order.setStatus(Order.OrderStatus.OPEN);
-		}
 		return orderRepo.saveAndFlush(order);
 	}
 
 	@Override
 	public boolean removeItem(long orderId, long itemId) {
 		Order order = orderRepo.findById(orderId).orElseThrow();
+		if (!Order.OrderStatus.OPEN.equals(order.getStatus())) {
+			throw new IllegalStateException("You can only cancle open orders");
+		}
 		order.getItems().stream().forEach(item -> {
 			if(item.getId() == itemId) {
 				if (item.getQuantity() > 1) {
@@ -103,9 +111,6 @@ public class OrderServiceImpl implements OrderService{
 				}
 			}
 		});
-		if(!order.getStatus().equals(Order.OrderStatus.OPEN)) {
-			order.setStatus(Order.OrderStatus.OPEN);
-		}
 		orderRepo.save(order);
 		return true;
 	}
@@ -113,14 +118,14 @@ public class OrderServiceImpl implements OrderService{
 	@Override
 	public boolean deleteItem(long orderId, long itemId) {
 		Order order = orderRepo.findById(orderId).orElseThrow();
+		if (!Order.OrderStatus.OPEN.equals(order.getStatus())) {
+			throw new IllegalStateException("You can only cancle open orders");
+		}
 		order.getItems().stream().forEach(item -> {
 			if(item.getId() == itemId) {
 				item.setDeleted(true);
 			}
 		});
-		if(!order.getStatus().equals(Order.OrderStatus.OPEN)) {
-			order.setStatus(Order.OrderStatus.OPEN);
-		}
 		orderRepo.save(order);
 		return true;
 	}
@@ -130,6 +135,35 @@ public class OrderServiceImpl implements OrderService{
 		Order order = orderRepo.findById(orderId).orElseThrow();
 		order.setStatus(Order.OrderStatus.CONFIRMED);
 		return orderRepo.save(order);
+	}
+	
+	private String  generateOrderNumber() throws ParseException {
+		String today = LocalDateTime.now()
+	       .format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+		return String.format("APX%s", today);
+		
+	}
+
+	@Override
+	public boolean process(long orderId, String status) {
+		Order order = orderRepo.findById(orderId).orElseThrow();		
+		switch(status) {
+			case "CANCELED": 
+				if (!Order.OrderStatus.OPEN.equals(order.getStatus())) {
+					throw new IllegalStateException("You can only cancle open orders");
+				}
+				order.setStatus(Order.OrderStatus.CANCELED);
+				break;
+			case "PROCESSING":
+			case "DELIVERED":
+				order.setStatus(Order.OrderStatus.valueOf(status));
+				break;
+			default: 
+				throw new IllegalStateException("Invalid order status");	
+		
+		}		
+		orderRepo.save(order);
+		return true;
 	}
 
 }

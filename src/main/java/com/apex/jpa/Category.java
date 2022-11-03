@@ -25,7 +25,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "categories")
 @SequenceGenerator(name = "categories_sequence")
-@SQLDelete(sql = "UPDATE categories SET deleted = true WHERE id=?")
+@SQLDelete(sql = "UPDATE categories SET deleted = true WHERE category_id=?")
 @Where(clause = "deleted=false")
 public class Category {
 	

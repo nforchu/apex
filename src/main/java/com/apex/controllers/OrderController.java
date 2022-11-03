@@ -2,9 +2,12 @@ package com.apex.controllers;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,13 +43,23 @@ public class OrderController {
 				status == null ?
 				orderService.findAll() : 
 				orderService.findByStatus(status);
-		model.addAttribute("orders", orders);
-		model.addAttribute("menu", buildMenu());
+		String title = String.format("%s ORDERS", status == null ? "ALL" : status);
+		model.addAttribute("orders", orders)
+			 .addAttribute("title", title)
+			.addAttribute("menu", buildMenu());
 		return "order-list";
 	}
 	
+	@RequestMapping(value = "{id}/process", method = RequestMethod.GET)
+	public String checkout(@PathVariable long id, @RequestParam String status){
+		orderService.process(id, status);
+		return String.format("redirect:/order/%s", id);
+	}
+	
 	private MenuMap buildMenu(){
-        MenuMap menuMap = new MenuMap().setTitle("Products");
+        MenuMap menuMap = new MenuMap()
+        			.setTitle("Products")
+        			.addPair("All", "/order/list");
         for (Order.OrderStatus status : Order.OrderStatus.values()) {
         	menuMap.addPair(status.name(), String.format("/order/list/?status=%s", status.name()));
         }

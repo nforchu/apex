@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "customers")
 @SequenceGenerator(name = "customers_sequence")
-@SQLDelete(sql = "UPDATE customers SET deleted = true WHERE id=?")
+@SQLDelete(sql = "UPDATE customers SET deleted = true WHERE customer_id=?")
 @Where(clause = "deleted=false")
 public class Customer {
 	
