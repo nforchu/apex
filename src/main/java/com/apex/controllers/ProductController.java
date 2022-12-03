@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/product")
+@RequestMapping("/console/product")
 public class ProductController {
 
     private final ProductService productService;

@@ -17,7 +17,7 @@ import com.apex.services.OrderService;
 import com.apex.util.MenuMap;
 
 @Controller
-@RequestMapping("order")
+@RequestMapping("console/order")
 public class OrderController {
 	
 	private OrderService orderService;

@@ -12,6 +12,8 @@ import javax.persistence.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "products")
 @SequenceGenerator(name = "products_sequence")
@@ -61,9 +63,11 @@ public class Product {
 		    joinColumns = @JoinColumn(name = "product_id"),
 		    inverseJoinColumns = @JoinColumn(name = "category_id")
 		)
+	@JsonIgnore
 	private Set<Category> categories = new HashSet<>();
 	
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonIgnore
 	private List<OrderItem> orderItems = new ArrayList<>();
 
     public long getId() {

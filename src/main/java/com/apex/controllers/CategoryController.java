@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.Map;
 
 @Controller
-@RequestMapping(value = "category")
+@RequestMapping(value = "console/category")
 public class CategoryController {
 
     CategoryService categoryService;
@@ -43,7 +43,7 @@ public class CategoryController {
         return "category-products";
     }
     
-    @RequestMapping(value = "list", method = RequestMethod.GET)
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String list(Model model) {
         model.addAttribute("menu", buildMenu());
         model.addAttribute("categories", categoryService.getCategories());

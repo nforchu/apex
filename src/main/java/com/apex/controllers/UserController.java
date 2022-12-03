@@ -13,10 +13,12 @@ import com.apex.services.UserService;
 import com.apex.util.MenuMap;
 
 @Controller
-@RequestMapping("user")
+@RequestMapping("console/user")
 public class UserController {
 	
 	UserService userService;
+	
+	
 	
 	public UserController(UserService userService) {
 		super();
